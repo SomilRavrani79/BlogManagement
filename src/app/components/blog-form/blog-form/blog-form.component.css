@@ -1,0 +1,12 @@
+.full-width {
+  width: 100%;
+}
+
+mat-card {
+  margin-top: 20px;
+  padding: 20px;
+}
+.success-message {
+  color: green;
+  margin-top: 1rem;
+}

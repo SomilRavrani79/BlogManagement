@@ -1,0 +1,11 @@
+<div class="blog-container">
+  <div class="blog-entry" *ngFor="let blog of blogs">
+    <div class="blog-content">
+      <span class="blog-username">{{ blog.username }}</span>
+      <span class="blog-date">{{ blog.dateCreated | date }}</span>
+      <p class="blog-text">{{ blog.text }}</p>
+    </div>
+    <button class="delete-button" mat-raised-button color="warn" (click)="deleteBlog(blog.id)">Delete</button>
+  </div>
+</div>
+

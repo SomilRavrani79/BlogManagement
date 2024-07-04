@@ -1,0 +1,44 @@
+<!-- <mat-card>
+  <form [formGroup]="blogForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="full-width">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username">
+      <mat-error *ngIf="isFieldInvalid('username')">
+        Username is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Text</mat-label>
+      <textarea matInput formControlName="text"></textarea>
+      <mat-error *ngIf="isFieldInvalid('text')">
+        Text is required
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="blogForm.invalid">Submit</button>
+  </form>
+  <div *ngIf="showSuccessMessage" class="success-message">New record added successfully</div>
+</mat-card> -->
+
+<mat-card>
+  <form [formGroup]="blogForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="full-width">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" placeholder="Username">
+      <mat-error *ngIf="isFieldInvalid('username')">
+        Username is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Text</mat-label>
+      <textarea matInput formControlName="text" placeholder="Text"></textarea>
+      <mat-error *ngIf="isFieldInvalid('text')">
+        Text is required
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="blogForm.invalid">Submit</button>
+  </form>
+</mat-card>
