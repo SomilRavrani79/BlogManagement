@@ -1,28 +1,85 @@
-# BlogManagementApplication
+# Blog Management Application
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.11.
+This is a Blog Management Application developed using Angular. The application allows users to create, view, and delete blog posts. It also includes form validation and integration with a backend service.
 
-## Development server
+## Setup Instructions
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### Prerequisites
 
-## Code scaffolding
+- Node.js and npm: [Download and install](https://nodejs.org/)
+- Angular CLI: Install globally using `npm install -g @angular/cli`
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Installation
 
-## Build
+1. Clone the repository:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+    ```bash
+    git clone https://github.com/SomilRavrani79/BlogManagement.git
+    cd your-repository-name/ClientApp
+    ```
 
-## Running unit tests
+2. Install the Angular dependencies:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+    ```bash
+    npm install
+    ```
 
-## Running end-to-end tests
+## How to Run the Application
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+1. Navigate to the `ClientApp` directory:
 
-## Further help
+    ```bash
+    cd ClientApp
+    ```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-"# BlogManagement" 
+2. Start the Angular development server:
+
+    ```bash
+    ng serve
+    ```
+
+3. Open a web browser and navigate to `http://localhost:4200` to access the Blog Management Application.
+
+## Design Decisions and Application Structure
+
+### Design Decisions
+
+- **Component-Based Architecture**: The application is built using Angular's component-based architecture to ensure modularity, reusability, and maintainability.
+- **Reactive Forms**: Reactive forms are used for form handling and validation to provide a robust and scalable way to manage form states and validations.
+- **Angular Material**: Angular Material is used for UI components to ensure a consistent and responsive design.
+- **Service Layer**: A service layer is implemented to handle HTTP requests and encapsulate business logic, making the codebase cleaner and easier to manage.
+
+### Application Structure
+
+```plaintext
+ClientApp/
+├── src/
+│   ├── app/
+│   │   ├── components/
+│   │   │   ├── blog-form/
+│   │   │   │   ├── blog-form.component.css
+│   │   │   │   ├── blog-form.component.html
+│   │   │   │   ├── blog-form.component.ts
+│   │   │   ├── blog-list/
+│   │   │   │   ├── blog-list.component.css
+│   │   │   │   ├── blog-list.component.html
+│   │   │   │   ├── blog-list.component.ts
+│   │   ├── models/
+│   │   │   ├── blog.model.ts
+│   │   ├── services/
+│   │   │   ├── blog.service.ts
+│   │   ├── app.component.css
+│   │   ├── app.component.html
+│   │   ├── app.component.ts
+│   │   ├── app.module.ts
+│   ├── assets/
+│   ├── environments/
+│   ├── index.html
+│   ├── main.ts
+│   ├── styles.css
+│   ├── polyfills.ts
+├── .gitignore
+├── angular.json
+├── package.json
+├── README.md
+├── tsconfig.json
