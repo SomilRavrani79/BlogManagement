@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertDialogComponent } from 'src/app/alert-dialog/alert-dialog.component';
-import { Blog } from 'src/app/models/blog.model/blog';
+import { Blog, PaginatedResult } from 'src/app/models/blog.model/blog';
 import { BlogService } from 'src/app/services/blog.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-blog-list',
@@ -12,6 +13,9 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 export class BlogListComponent implements OnInit {
   blogs: Blog[] = [];
   showDeleteMessage = false;
+  pageSize = 5;
+  pageNumber = 1;
+  totalBlogs = 0;
 
   constructor(private blogService: BlogService, private dialog: MatDialog) {
     this.blogService.refreshNeeded.subscribe(() => {
@@ -24,9 +28,14 @@ export class BlogListComponent implements OnInit {
   }
 
   loadBlogs(): void {
-    this.blogService.getBlogs().subscribe(
-      (data: Blog[]) => this.blogs = data,
-      error => console.error(error)
+    this.blogService.getBlogs(this.pageNumber, this.pageSize).subscribe(
+      (data: PaginatedResult<Blog[]>) => {
+        this.blogs = data.items;
+        this.totalBlogs = data.totalCount;
+      },
+      error => {
+        console.error('Error fetching blogs:', error);
+      }
     );
   }
 
@@ -55,5 +64,11 @@ export class BlogListComponent implements OnInit {
     return this.dialog.open(AlertDialogComponent, {
       data: { title, message, confirm }
     });
+  }
+
+  onPageChange(event: PageEvent): void {
+    this.pageSize = event.pageSize;
+    this.pageNumber = event.pageIndex + 1;
+    this.loadBlogs();
   }
 }

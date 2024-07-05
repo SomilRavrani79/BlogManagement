@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, Subject, map, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Blog, GenericResponse } from '../models/blog.model/blog';
+import { Blog, GenericResponse, PaginatedResult } from '../models/blog.model/blog';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +18,12 @@ export class BlogService {
     return this.refreshNeeded$;
   }
 
-  getBlogs(): Observable<Blog[]> {
-    return this.http.get<GenericResponse<Blog[]>>(this.apiUrl).pipe(
-      map(response => response.data) // Extract data from the generic response
+  getBlogs(pageNumber: number = 1, pageSize: number = 5): Observable<PaginatedResult<Blog[]>> {
+    const params = new HttpParams()
+      .set('pageNumber', pageNumber.toString())
+      .set('pageSize', pageSize.toString());
+    return this.http.get<GenericResponse<PaginatedResult<Blog[]>>>(this.apiUrl, { params }).pipe(
+      map(response => response.data)
     );
   }
 

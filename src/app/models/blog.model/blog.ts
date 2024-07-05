@@ -11,3 +11,10 @@ export interface GenericResponse<T> {
   statusCode: number;
 }
 
+export interface PaginatedResult<T> {
+  totalCount: number;
+  items: T;
+  pageSize: number;
+  pageNumber : number;
+}
+

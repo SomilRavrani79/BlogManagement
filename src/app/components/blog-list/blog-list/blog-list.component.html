@@ -1,11 +1,23 @@
-<div class="blog-container">
-  <div class="blog-entry" *ngFor="let blog of blogs">
-    <div class="blog-content">
-      <span class="blog-username">{{ blog.username }}</span>
-      <span class="blog-date">{{ blog.dateCreated | date }}</span>
-      <p class="blog-text">{{ blog.text }}</p>
-    </div>
-    <button class="delete-button" mat-raised-button color="warn" (click)="deleteBlog(blog.id)">Delete</button>
+<div class="blog-list-container">
+  <div class="blog-list">
+    <mat-card *ngFor="let blog of blogs" class="blog-card">
+      <mat-card-header>
+        <mat-card-title>{{ blog.username }}</mat-card-title>
+        <mat-card-subtitle>{{ blog.dateCreated | date }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ blog.text }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="warn" (click)="deleteBlog(blog.id)">Delete</button>
+      </mat-card-actions>
+    </mat-card>
   </div>
+  <mat-paginator
+    class="sticky-paginator"
+    [length]="totalBlogs"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="onPageChange($event)">
+  </mat-paginator>
 </div>
-

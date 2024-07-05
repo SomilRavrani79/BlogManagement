@@ -16,6 +16,10 @@ import { AlertDialogComponent } from './alert-dialog/alert-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpErrorInterceptor } from './interceptors/http-error.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { AppRoutingModule } from './app-routing.module';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -36,7 +40,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatIconModule,
     MatGridListModule,
     MatDialogModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    AppRoutingModule,
+    MatPaginatorModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true}
