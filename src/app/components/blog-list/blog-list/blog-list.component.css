@@ -10,6 +10,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
+  height: 100%;
 }
 
 .blog-card {
@@ -34,4 +35,34 @@
   bottom: 0;
   background: white;
   z-index: 1000;
+  display: flex;
 }
+
+.paginator-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-shrink: 0;
+}
+/* 
+.sticky-paginator {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  background: white;
+  z-index: 1000;
+  display: flex;
+  justify-content: flex-end; 
+  padding: 8px 16px;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  font-size: 16px; 
+}
+
+.paginator-container {
+  display: flex;
+  justify-content: flex-end; 
+  align-items: center;
+  width: 100%;
+  padding: 8px 16px;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+} */

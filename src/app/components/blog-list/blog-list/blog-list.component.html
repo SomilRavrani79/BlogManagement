@@ -13,11 +13,10 @@
       </mat-card-actions>
     </mat-card>
   </div>
-  <mat-paginator
-    class="sticky-paginator"
-    [length]="totalBlogs"
-    [pageSize]="pageSize"
-    [pageSizeOptions]="[5, 10, 25, 100]"
-    (page)="onPageChange($event)">
-  </mat-paginator>
+  <!-- <div class="paginator-container"> -->
+    <mat-paginator class="paginator-containersticky-paginator " [length]="totalBlogs" [pageSize]="pageSize"
+      [pageSizeOptions]="[5, 10, 25, 100]" (page)="onPageChange($event)">
+    </mat-paginator>
+  <!-- </div> -->
+
 </div>
