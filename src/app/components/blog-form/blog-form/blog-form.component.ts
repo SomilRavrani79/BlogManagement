@@ -45,7 +45,7 @@ export class BlogFormComponent implements OnInit {
 
   loadBlog(): void {
     if (this.blogId) {
-      this.blogService.getBlogs(0, 0,null, null,this.blogId).subscribe(
+      this.blogService.getBlogs(0, 0,null, null,null,this.blogId).subscribe(
         (data: any) => {
           const blog = data.data;
           this.blogForm.patchValue({

@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
+import { MatSort, Sort, SortDirection } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { AlertDialogComponent } from 'src/app/alert-dialog/alert-dialog.component';
-import { Blog, PaginatedResult } from 'src/app/models/blog.model/blog';
+import { Blog } from 'src/app/models/blog.model/blog';
 import { BlogService } from 'src/app/services/blog.service';
 
 @Component({
@@ -25,6 +25,7 @@ export class BlogListComponent implements OnInit, AfterViewInit {
   totalBlogs = 0;
   searchTerm: string = '';
   sortBy: string = 'date';
+  sortDirection: 'asc' | 'desc' = 'asc';
   loading: boolean = false;
   private searchSubject: Subject<string> = new Subject();
 
@@ -53,11 +54,16 @@ export class BlogListComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.sort.sortChange.subscribe((sort: Sort) => {
+      this.sortBy = sort.active;
+      this.sortDirection = sort.direction === '' ? 'asc' : sort.direction; // Handle empty string case
+      this.loadBlogs();
+    });
   }
 
   loadBlogs(): void {
     this.loading = true;
-    this.blogService.getBlogs(this.pageNumber, this.pageSize, this.searchTerm, this.sortBy).subscribe(
+    this.blogService.getBlogs(this.pageNumber, this.pageSize, this.searchTerm, this.sortBy, this.sortDirection).subscribe(
       (data: any) => {
         this.blogs = data.data.items;
         this.totalBlogs = data.data.totalCount;
@@ -113,6 +119,7 @@ export class BlogListComponent implements OnInit, AfterViewInit {
 
   onSortChange(sort: Sort): void {
     this.sortBy = sort.active;
+    this.sortDirection = sort.direction === '' ? 'asc' : sort.direction; // Handle empty string case
     this.loadBlogs();
   }
 }

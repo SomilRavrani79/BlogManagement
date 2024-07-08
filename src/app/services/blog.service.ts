@@ -18,12 +18,13 @@ export class BlogService {
     return this.refreshNeeded$;
   }
 
-  getBlogs(pageNumber: number = 1, pageSize: number = 5, searchTerm :  any, sortBy : any ,id?: number): Observable<GenericResponse<PaginatedResult<Blog[]>> | GenericResponse<Blog>> {
+  getBlogs(pageNumber: number = 1, pageSize: number = 5, searchTerm :  any, sortBy : any,direction : any,id?: number): Observable<GenericResponse<PaginatedResult<Blog[]>> | GenericResponse<Blog>> {
     const params = {
       pageNumber:pageNumber ,
       pageSize:pageSize,
       searchTerm: searchTerm ?? '',
       sortBy: sortBy ?? 'date',
+      direction: direction ?? 'asc',
       id: id ?? null
     };
 
