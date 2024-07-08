@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertDialogComponent } from 'src/app/alert-dialog/alert-dialog.component';
 import { Blog } from 'src/app/models/blog.model/blog';
 import { BlogService } from 'src/app/services/blog.service';
@@ -13,37 +14,85 @@ import { BlogService } from 'src/app/services/blog.service';
 export class BlogFormComponent implements OnInit {
   blogForm: FormGroup;
   showSuccessMessage = false;
+  isEditMode = false;
+  blogId: number | null = null;
   @Output() blogCreated = new EventEmitter<void>();
 
-  constructor(private fb: FormBuilder, private blogService: BlogService, private dialog: MatDialog) {
+  constructor(
+    private fb: FormBuilder,
+    private blogService: BlogService,
+    private dialog: MatDialog,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.blogForm = this.fb.group({
       username: ['', Validators.required],
       text: ['', Validators.required]
     });
   }
-  
-  ngOnInit(): void {}
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.blogId = params['id'] ? +params['id'] : null;
+      if (this.blogId) {
+        this.isEditMode = true;
+        this.loadBlog();
+      } else {
+        this.isEditMode = false;
+      }
+    });
+  }
+
+  loadBlog(): void {
+    if (this.blogId) {
+      this.blogService.getBlogs(0, 0,null, null,this.blogId).subscribe(
+        (data: any) => {
+          const blog = data.data;
+          this.blogForm.patchValue({
+            username: blog.username,
+            text: blog.text
+          });
+        },
+        error => {
+          console.error('Error fetching blogs:', error);
+        }
+      );
+
+    }
+  }
 
   onSubmit(): void {
     if (this.blogForm.valid) {
-      const newBlog: Blog = {
-        id: 0,
-        username: this.blogForm.get('username')?.value,
-        dateCreated: new Date(),
-        text: this.blogForm.get('text')?.value
-      };
-      this.blogService.createBlog(newBlog).subscribe(
-        () => {
-          this.blogForm.reset();
-          Object.keys(this.blogForm.controls).forEach(key => {
-            this.blogForm.get(key)?.setErrors(null);
-          });
-          
-          this.blogCreated.emit();
-          this.showAlert('Success', 'New record added successfully', true);
-        },
-        error => console.error(error)
-      );
+      if (this.isEditMode && this.blogId) {
+        const updatedBlog: Blog = {
+          id: this.blogId,
+          username: this.blogForm.get('username')?.value,
+          dateCreated: new Date(),
+          text: this.blogForm.get('text')?.value
+        };
+        this.blogService.createBlog(updatedBlog).subscribe(
+          () => {
+            this.showAlert('Success', 'Record Update successfully', true);
+            this.router.navigate(['/blog-list']);
+          },
+          error => console.error(error)
+        );
+      } else {
+        const newBlog: Blog = {
+          id: 0,
+          username: this.blogForm.get('username')?.value,
+          dateCreated: new Date(),
+          text: this.blogForm.get('text')?.value
+        };
+        this.blogService.createBlog(newBlog).subscribe(
+          () => {
+            this.showAlert('Success', 'Record added successfully', true);
+            this.blogForm.reset();
+            this.router.navigate(['/blog-list']);
+          },
+          error => console.error(error)
+        );
+      }
     }
   }
 
@@ -51,9 +100,13 @@ export class BlogFormComponent implements OnInit {
     const control = this.blogForm.get(field);
     return control ? control.invalid && (control.dirty || control.touched) : false;
   }
-  showAlert(title: string, message: string, confirm : boolean): void {
+  showAlert(title: string, message: string, confirm: boolean): void {
     this.dialog.open(AlertDialogComponent, {
       data: { title, message, confirm }
     });
   }
+  goBack(): void {
+    this.router.navigate(['/blog-list']);
+  }
+
 }

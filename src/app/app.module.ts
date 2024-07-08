@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';  // Add FormsModule here
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BlogFormComponent } from './components/blog-form/blog-form/blog-form.component';
@@ -20,18 +20,22 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { AppRoutingModule } from './app-routing.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
+import { HighlightPipe } from './Pipes/highlight-pipe.pipe'; // Import the pipe
 
 @NgModule({
   declarations: [
     AppComponent,
     BlogFormComponent,
     BlogListComponent,
-    AlertDialogComponent
+    AlertDialogComponent,
+    HighlightPipe // Declare the pipe
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    FormsModule, // Add FormsModule here
     HttpClientModule,
     MatInputModule,
     MatButtonModule,
@@ -44,7 +48,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatSidenavModule,
     MatToolbarModule,
     AppRoutingModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSelectModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true}

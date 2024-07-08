@@ -18,14 +18,18 @@ export class BlogService {
     return this.refreshNeeded$;
   }
 
-  getBlogs(pageNumber: number = 1, pageSize: number = 5): Observable<PaginatedResult<Blog[]>> {
-    const params = new HttpParams()
-      .set('pageNumber', pageNumber.toString())
-      .set('pageSize', pageSize.toString());
-    return this.http.get<GenericResponse<PaginatedResult<Blog[]>>>(this.apiUrl, { params }).pipe(
-      map(response => response.data)
-    );
+  getBlogs(pageNumber: number = 1, pageSize: number = 5, searchTerm :  any, sortBy : any ,id?: number): Observable<GenericResponse<PaginatedResult<Blog[]>> | GenericResponse<Blog>> {
+    const params = {
+      pageNumber:pageNumber ,
+      pageSize:pageSize,
+      searchTerm: searchTerm ?? '',
+      sortBy: sortBy ?? 'date',
+      id: id ?? null
+    };
+
+    return this.http.post<GenericResponse<PaginatedResult<Blog[]>> | GenericResponse<Blog>>(this.apiUrl+ '/GetData', params );
   }
+
 
   createBlog(blog: Blog): Observable<Blog> {
     return this.http.post<GenericResponse<Blog>>(this.apiUrl, blog).pipe(

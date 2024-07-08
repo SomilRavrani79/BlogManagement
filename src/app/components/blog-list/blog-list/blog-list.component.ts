@@ -4,6 +4,7 @@ import { Blog, PaginatedResult } from 'src/app/models/blog.model/blog';
 import { BlogService } from 'src/app/services/blog.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-blog-list',
@@ -16,8 +17,9 @@ export class BlogListComponent implements OnInit {
   pageSize = 5;
   pageNumber = 1;
   totalBlogs = 0;
-
-  constructor(private blogService: BlogService, private dialog: MatDialog) {
+  searchTerm: string = '';
+  sortBy: string = 'date';
+  constructor(private blogService: BlogService, private dialog: MatDialog, private router: Router) {
     this.blogService.refreshNeeded.subscribe(() => {
       this.loadBlogs();
     });
@@ -28,10 +30,10 @@ export class BlogListComponent implements OnInit {
   }
 
   loadBlogs(): void {
-    this.blogService.getBlogs(this.pageNumber, this.pageSize).subscribe(
-      (data: PaginatedResult<Blog[]>) => {
-        this.blogs = data.items;
-        this.totalBlogs = data.totalCount;
+    this.blogService.getBlogs(this.pageNumber, this.pageSize,this.searchTerm, this.sortBy).subscribe(
+      (data:any) => {
+        this.blogs = data.data.items;
+        this.totalBlogs = data.data.totalCount;
       },
       error => {
         console.error('Error fetching blogs:', error);
@@ -69,6 +71,20 @@ export class BlogListComponent implements OnInit {
   onPageChange(event: PageEvent): void {
     this.pageSize = event.pageSize;
     this.pageNumber = event.pageIndex + 1;
+    this.loadBlogs();
+  }
+  editBlog(id: number): void {
+    this.router.navigate(['/add-blog'], { queryParams: { id } });
+  }
+
+  onSearchChange(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    this.searchTerm = inputElement.value;
+    this.loadBlogs(); // Or refresh the blogs based on the search term
+  }
+
+  onSortChange(sortBy: string): void {
+    this.sortBy = sortBy;
     this.loadBlogs();
   }
 }
