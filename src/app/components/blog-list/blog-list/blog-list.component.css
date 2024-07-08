@@ -5,45 +5,32 @@
   padding: 1rem;
 }
 
-.search-sort-container {
-  display: flex;
-  justify-content: space-between;
+.search-container {
   margin-bottom: 1rem;
-}
-
-.search-field, .sort-field {
-  flex: 1;
-  margin-right: 1rem;
-}
-
-.sort-field {
-  margin-right: 0;
 }
 
 .blog-list {
   flex-grow: 1;
-  overflow-y: auto;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
+  overflow-x: auto;
   height: 100%;
 }
 
-.blog-card {
+table {
   width: 100%;
-  margin-bottom: 16px;
+  border-collapse: collapse;
 }
 
-@media (min-width: 600px) {
-  .blog-card {
-    width: calc(33.333% - 43px); /* Three cards per row */
-  }
+th, td {
+  padding: 8px 16px;
+  text-align: left;
 }
 
-@media (min-width: 960px) {
-  .blog-card {
-    width: calc(33.333% - 43px); /* Three cards per row */
-  }
+th.mat-sort-header-sorted {
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.mat-elevation-z8 {
+  box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.2), 0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 1px 8px 0px rgba(0, 0, 0, 0.12);
 }
 
 .sticky-paginator {
@@ -51,24 +38,18 @@
   bottom: 0;
   background: white;
   z-index: 1000;
-  display: flex;
 }
 
 .paginator-container {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  flex-shrink: 0;
-}
-.sort-panel {
-  max-height: 300px !important; /* Adjust as necessary */
-  overflow: auto !important;
-  z-index: 1001 !important; /* Ensure it is above other elements */
 }
 
-mark {
-  background-color: #cce4f7; /* Low shade of blue */
-  font-weight: bold;
-  color: #003366; /* Darker blue text color for better contrast */
+button {
+  margin-right: 8px;
 }
 
+button:last-child {
+  margin-right: 0;
+}

@@ -22,6 +22,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { HighlightPipe } from './Pipes/highlight-pipe.pipe'; // Import the pipe
+import { MatTable, MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,15 @@ import { HighlightPipe } from './Pipes/highlight-pipe.pipe'; // Import the pipe
     MatToolbarModule,
     AppRoutingModule,
     MatPaginatorModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDialogModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true}
